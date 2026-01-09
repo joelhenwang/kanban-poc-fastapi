@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.models.board import Board
+from app.models.user import User
 
 
 class Status(Enum):
@@ -34,6 +35,7 @@ class BaseTask(BaseModel):
     description: str
     status: Status
 
+
 class CreateTask(BaseTask):
     pass
 
@@ -48,6 +50,6 @@ class UpdateTask(BaseTask):
         from_attributes = True
 
 
-class ReadBoard(BaseTask):
+class ReadTask(BaseTask):
     id: int
     created_at: datetime.datetime

@@ -22,14 +22,32 @@ class Task(SQLModel, table=True):
     updated_at: datetime.datetime = Field(default=datetime.datetime.now)
     status: Status = Field(default=Status.TODO)
 
+    author_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    author: User = Relationship(back_populates="tasks")
+
     board_id: Optional[int] = Field(default=None, foreign_key="board.id")
     board: Optional[Board] = Relationship(back_populates="tasks")
 
 
 class BaseTask(BaseModel):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    description: str | None = Field(default="")
-    created_at: datetime.datetime = Field(default=datetime.datetime.now)
-    updated_at: datetime.datetime = Field(default=datetime.datetime.now)
-    status: Status = Field(default=Status.TODO)
+    name: str
+    description: str
+    status: Status
+
+class CreateTask(BaseTask):
+    pass
+
+
+class UpdateTask(BaseTask):
+    name: str
+    description: str
+    status: Status
+    updated_at: datetime.datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ReadBoard(BaseTask):
+    id: int
+    created_at: datetime.datetime

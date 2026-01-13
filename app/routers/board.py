@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, select, update
+from fastapi import HTTPException, status
+from sqlmodel import Session, select
 
 from app.models.board import Board
 
